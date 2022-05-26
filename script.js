@@ -24,22 +24,27 @@ keys.addEventListener("click", e => {
         switch (action) {
             case "add":
                 console.log("add");
-                if (preOp != null) {
-                    postOp = currDisplay;
-                    updateDisplay(calculate(preOp, postOp, op))
-                }
-                op = "+";
                 preOp = currDisplay;
+                op = "+";
                 clearDisplay();
                 break;
             case "subtract":
                 console.log("subtract");
+                preOp = currDisplay;
+                op = "-";
+                clearDisplay();
                 break;
             case "multiply":
                 console.log("multiply");
+                preOp = currDisplay;
+                op = "*";
+                clearDisplay();
                 break;
             case "divide":
                 console.log("divide");
+                preOp = currDisplay;
+                op = "/";
+                clearDisplay();
                 break;
             case "clear":
                 clearDisplay();
@@ -52,10 +57,9 @@ keys.addEventListener("click", e => {
             case "calculate":
                 console.log("calculate");
                 postOp = currDisplay;
-                updateDisplay(calculate(preOp, postOp, op));
+                updateDisplay(calculate());
                 break;
         }
-
     }
 });
 
@@ -67,32 +71,32 @@ function clearDisplay() {
     display.textContent = "0";
 }
 
-function calculate(preOperator, postOperator, operator) {
-    if (preOperator == null || postOperator == null || operator == null) {
-        console.log("preOp:", preOperator, "op:", operator, "postOp", postOperator);
-        updateDisplay("Error");
+function calculate() {
+    if (preOp == null || postOp == null || op == null) {
+        console.log("preOp:", preOp, "op:", op, "postOp", postOp);
+        exit;
     }
 
     let result = "Default";
-    switch (operator) {
+    switch (op) {
         case "+":
-            result = Number(preOperator) + Number(postOperator);
+            result = Number(preOp) + Number(postOp);
             break;
         case "-":
-            result = preOperator - postOperator;
+            result = Number(preOp) - Number(postOp);
             break;
         case "/":
-            result = preOperator / postOperator;
+            result = Number(preOp) / Number(postOp);
             break;
         case "*":
-            result = preOperator * postOperator;
+            result = Number(preOp) * Number(postOp);
             break;
     }
 
     // clear 
-    preOperator = result;
-    postOperator = null;
-    operator = null;
+    preOp = result;
+    postOp = null;
+    op = null;
 
     return result.toString();
 }
